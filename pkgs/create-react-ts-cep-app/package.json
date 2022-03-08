@@ -1,6 +1,6 @@
 {
   "name": "@hanakla/create-react-ts-cep-app",
-  "version": "0.0.0",
+  "version": "0.0.1-beta.1",
   "description": "Create Adobe CEF extension with React/TypeScript",
   "main": "dist/index",
   "author": "Hanakla<hanakla.dev@gmail.com>",
