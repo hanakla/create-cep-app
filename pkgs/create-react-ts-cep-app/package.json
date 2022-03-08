@@ -1,13 +1,13 @@
 {
   "name": "@hanakla/create-react-ts-cep-app",
-  "version": "0.0.1-beta.2",
+  "version": "0.0.1-beta.3",
   "description": "Create Adobe CEF extension with React/TypeScript",
   "main": "dist/index",
   "author": "Hanakla<hanakla.dev@gmail.com>",
   "repository": "https://github.com/hanakla/create-react-ts-cep-app",
   "license": "MIT",
   "bin": {
-    "create-react-ts-cep-app": "./bin/index.j"
+    "create-react-ts-cep-app": "./bin/index.js"
   },
   "scripts": {
     "build": "ncc build src/index.ts -o bin",
