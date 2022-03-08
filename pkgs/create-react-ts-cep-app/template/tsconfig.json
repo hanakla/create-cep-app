@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "importHelpers": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "create-react-ts-cep-app",
+  "version": "0.0.0",
+  "description": "Create Adobe CEF extension with React/TypeScript",
+  "main": "index.js",
+  "author": "Hanakla<hanakla.dev@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "pkgs/*"
+  ]
+}
