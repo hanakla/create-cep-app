@@ -1,181 +1,239 @@
-#!/usr/bin/env node
+import format from "xml-formatter";
 
-import { Command } from "commander";
-import chalk from "chalk";
-import cpy from "cpy";
-import path from "path";
-import { spawn } from "child_process";
-import { writeFileSync, existsSync, readFileSync } from "fs";
-import validateProjectName from "validate-npm-package-name";
-import prompts from "prompts";
-
-// ncc breaks '*.json' string with __nccwpck_require__
-const THE_JSON = [..."json"].join("");
-
-const packageJson = require(`../package.${THE_JSON}`);
-let appName: string = "";
-
-const program = new Command(packageJson.name)
-  .version(packageJson.version)
-  .arguments("<project-directory>")
-  .usage(`${chalk.green`a`}`)
-  .action((name) => {
-    appName = name.trim();
-  })
-  .option("--use-npm")
-  .parse(process.argv);
-
-const printValidationResults = (errors: string[] = []) => {
-  errors.forEach((error) => console.log(`  ${chalk.red(error)}`));
+export type CEPConfig = {
+  bundleId: string;
+  locales: Array<string> | "All";
+  requiredRuntime: {
+    CSXS: "5.0" | "6.0" | "7.0" | "8.0" | "9.0" | "10.0" | "11.0";
+  };
+  hostApps: {
+    photoshop?: { version: `[${string},${string}]` };
+    illustrator?: { version: `[${string},${string}]` };
+    indesign?: { version: `[${string},${string}]` };
+    incopy?: { version: `[${string},${string}]` };
+    premiere?: { version: `[${string},${string}]` };
+    aftereffects?: { version: `[${string},${string}]` };
+    prelude?: { version: `[${string},${string}]` };
+    animate?: { version: `[${string},${string}]` };
+    audition?: { version: `[${string},${string}]` };
+    dreamweaver?: { version: `[${string},${string}]` };
+  };
+  extensions: Array<{
+    id: string;
+    version: string;
+    mainPath: string;
+    cefCommandLine?: Array<
+      | "--enable-media-stream"
+      | "--enable-speech-input"
+      | "--persist-session-cookies"
+      | "--disable-image-loading"
+      | "--disable-javascript-open-windows"
+      | "--disable-javascript-close-windows"
+      | "--disable-javascript-access-clipboard"
+      | "--enable-caret-browsing"
+      | "--proxy-auto-detect"
+      | "--user-agent"
+      | "--disable-application-cache"
+      | "--enable-nodejs"
+      | "--disable-pinch"
+      | "--mixed-context"
+    >;
+    scriptPath?: string;
+    lifeCycle: {
+      autoVisible: boolean;
+      startOn?: {
+        events: string[];
+      };
+    };
+    ui: {
+      type: "Panel" | "ModalDialog" | "Modeless" | "Custom";
+      menu: string;
+      geometry: {
+        size: { width: number; height: number };
+        minSize?: { width: number; height: number };
+        maxSize?: { width: number; height: number };
+      };
+    };
+    icons?: {
+      Normal?: string;
+      RollOver?: string;
+      Disabled?: string;
+      DarkNormal?: string;
+      DarkRollOver?: string;
+    };
+  }>;
 };
 
-async function run() {
-  // Validate package name
-  {
-    if (!appName) {
-      appName = (
-        await prompts({
-          type: "text",
-          name: "appName",
-          message: "Enter new app name",
-        })
-      ).appName;
-    }
-
-    if (!appName) {
-      console.log();
-      console.log(`${chalk.red("Please specify the project directory:")}`);
-      console.log(
-        `  ${chalk.cyan(program.name())} ${chalk.green("<project-directory>")}`
-      );
-      console.log();
-
-      process.exit(1);
-    }
-
-    const validation = validateProjectName(appName);
-    if (!validation.validForNewPackages) {
-      console.log(validation);
-      console.log();
-      console.log(chalk.red(`Invalid project name: \`${appName}\``));
-      printValidationResults(validation.errors);
-      printValidationResults(validation.warnings);
-      console.log();
-
-      process.exit(1);
-    }
-  }
-
-  let extensionId: string;
-  {
-    extensionId = (
-      await prompts({
-        type: "text",
-        name: "id",
-        message: "Enter extension id (likes com.example.your-extension)",
-        validate: (id) => id !== "",
-      })
-    ).id;
-
-    if (!extensionId) {
-      console.log(chalk.red(`Invalid extension id: \`${appName}\``));
-      process.exit(1);
-    }
-  }
-
-  const appoPath = path.posix.join(process.cwd(), appName);
-
-  if (existsSync(appoPath)) {
-    console.log();
-    console.log(chalk.red(`Project directory \`${appName}\` already exists`));
-    console.log(
-      chalk.red("Please remove it or specify another project-directory")
-    );
-    console.log();
-
-    process.exit(1);
-  }
-
-  console.log("Copying files... to ", appoPath);
-  await cpy(["./**/*"], appoPath, {
-    dot: true,
-    markDirectories: true,
-    ignore: ["./yarn.lock"],
-    ignoreFiles: ["gitignore", "npmignore"],
-    cwd: path.posix.join(__dirname, "../template"),
-    rename: (name) => {
-      if (name === "gitignore") return ".gitignore";
-      if (name === "npmignore") return ".npmignore";
-      if (name === "dot-debug") return ".debug";
-      return name;
-    },
-  });
-
-  {
-    const appPackageJsonPath = path.posix.join(appoPath, `package.${THE_JSON}`);
-    const appPackageJson = JSON.parse(
-      readFileSync(appPackageJsonPath, { encoding: "utf-8" })
-    );
-    appPackageJson.name = appName;
-    writeFileSync(
-      appPackageJsonPath,
-      JSON.stringify(appPackageJson, null, "  "),
-      {
-        encoding: "utf-8",
-      }
-    );
-  }
-
-  {
-    const manifestPath = path.posix.join(appoPath, "CSXS/manifest.xml");
-    const manifest = readFileSync(manifestPath, { encoding: "utf-8" });
-    writeFileSync(
-      manifestPath,
-      manifest.replace(/{{extensionId}}/g, extensionId),
-      { encoding: "utf-8" }
-    );
-  }
-
-  {
-    const debugPath = path.posix.join(appoPath, ".debug");
-    const dotDebug = readFileSync(debugPath, { encoding: "utf-8" });
-    writeFileSync(
-      debugPath,
-      dotDebug.replace(/{{extensionId}}/g, extensionId),
-      { encoding: "utf-8" }
-    );
-  }
-
-  {
-    const packageCommands: [string, string[]][] = program.opts().useNpm
-      ? [["npm", ["install"]]]
-      : [["yarn", ["install"]]];
-
-    for (let command of packageCommands) {
-      await new Promise<void>((resolve, reject) => {
-        const [proc, args] = command;
-
-        spawn(proc, args, {
-          stdio: "inherit",
-          cwd: appoPath,
-          env: { ...process.env },
-        }).on("close", (code) => {
-          if (code !== 0) {
-            reject(new Error("`yarn install` failed"));
-            return;
-          }
-
-          resolve();
-        });
-      });
-    }
-  }
-
-  console.log(`${chalk.green("Success!")} Created ${appName} at ${appoPath}`);
+export function createCEPConfig(option: CEPConfig) {
+  return option;
 }
 
-run().catch((e) => {
-  console.log();
-  console.log(chalk.red("Installation failed: "), e);
-  console.log();
-});
+// createCEPConfig({
+//   requiredRuntime: {
+//     CSXS: "5.0",
+//   },
+//   hostApps: { illustrator: { version: "6.1.0" } },
+//   locales: "All",
+//   extensions: [
+//     {
+//       id: "<app-id>",
+//       version: "0.0.0",
+//       mainPath: "./dist/client/index.html",
+//       scriptPath: "./dist/host/index.js",
+//       lifeCycle: { autoVisible: true },
+//       ui: {
+//         type: "Panel",
+//         menu: "<app-id>",
+//         geometry: { size: { width: 300, height: 300 } },
+//       },
+//     },
+//   ],
+// });
+
+const HostNameMap: { [K in keyof Required<CEPConfig["hostApps"]>]: string[] } =
+  {
+    photoshop: ["PHXS", "PHSP"],
+    illustrator: ["ILST"],
+    indesign: ["IDSN"],
+    incopy: ["AICY"],
+    premiere: ["PPRO"],
+    aftereffects: ["AEFT"],
+    prelude: ["PRLD"],
+    animate: ["FLPR"],
+    audition: ["AUDT"],
+    dreamweaver: ["DRWV"],
+  };
+
+const escaleFalsy = ({ raw }: TemplateStringsArray, ...subs: any[]) => {
+  // const result: string[] = []
+  return raw
+    .reduce((prev, cur, idx) => {
+      prev.push(cur, subs.shift());
+      return prev;
+    }, [] as string[])
+    .join("");
+};
+
+export function buildManifest(option: CEPConfig) {
+  const manifest = escaleFalsy`
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <ExtensionManifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ExtensionBundleId="${
+      option.bundleId
+    }" ExtensionBundleVersion="1.0" Version="6.0">
+      <ExtensionList>
+        ${option.extensions.map(
+          (ex) => `<Extension Id="${ex.id}" Version="${ex.version}" />`
+        )}
+      </ExtensionList>
+      <ExecutionEnvironment>
+        <HostList>
+          ${Object.entries(option.hostApps)
+            .map(([name, opt]) =>
+              HostNameMap[name as keyof typeof HostNameMap]
+                .map(
+                  (ident) => `<Host Name="${ident}" Version="${opt.version}" />`
+                )
+                .join("\n")
+            )
+            .join("\n")}
+        </HostList>
+        <LocaleList>
+          ${
+            option.locales === "All"
+              ? `<Locale Code="All" />`
+              : option.locales.map((l) => `<Locale Code="${l}" />`)
+          }
+        </LocaleList>
+        <RequiredRuntimeList>
+          <RequiredRuntime Name="CSXS" Version="${
+            option.requiredRuntime.CSXS
+          }" />
+        </RequiredRuntimeList>
+      </ExecutionEnvironment>
+      <DipatchInfoList>
+        ${option.extensions.map(
+          (ext) =>
+            escaleFalsy`
+              <Extension Id="${ext.id}">
+                <DispatchInfo>
+                  <Resources>
+                    <MainPath>${ext.mainPath}</MainPath>
+                    ${
+                      ext.scriptPath &&
+                      `<ScriptPath>${ext.scriptPath}</ScriptPath>`
+                    }
+                    ${
+                      ext.cefCommandLine != null &&
+                      `
+                        <CEFCommandLine>
+                          ${ext.cefCommandLine.map(
+                            (param) => `<Parameter>${param}</Parameter>`
+                          )}
+                        </CEFCommandLine>
+                      `
+                    }
+                  </Resources>
+                  <Lifecycle>
+                    <AutoVisible>${
+                      ext.lifeCycle.autoVisible ? "true" : "false"
+                    }</AutoVisible>
+                    ${
+                      ext.lifeCycle.startOn &&
+                      `
+                        <StartOn>
+                          ${ext.lifeCycle.startOn?.events.map(
+                            (ev) => `<Event>${ev}</Event>`
+                          )}
+                        </StartOn>
+                      `
+                    }
+                  </Lifecycle>
+                  <UI>
+                    <Type>${ext.ui.type}</Type>
+                    <Menu>${ext.ui.menu}</Menu>
+                    <Geometry>
+                      <Size>
+                        <Width>${ext.ui.geometry.size.width}</Width>
+                        <Height>${ext.ui.geometry.size.height}</Height>
+                      </Size>
+                      ${
+                        ext.ui.geometry.maxSize &&
+                        `
+                        <MaxSize>
+                          <Width>${ext.ui.geometry.maxSize.width}</Width>
+                          <Height>${ext.ui.geometry.maxSize.height}</Height>
+                        </MaxSize>
+                      `
+                      }
+                      ${
+                        ext.ui.geometry.minSize &&
+                        `
+                        <MinSize>
+                          <Width>${ext.ui.geometry.minSize.width}</Width>
+                          <Height>${ext.ui.geometry.minSize.height}</Height>
+                        </MinSize>
+                      `
+                      }
+                    </Geometry>
+                    ${
+                      ext.icons &&
+                      `
+                      <Icons>
+                        ${Object.entries(ext.icons).map(
+                          ([type, value]) =>
+                            `<Icon Type="${type}">${value}</Icon>`
+                        )}
+                      </Icons>
+                    `
+                    }
+                  </UI>
+                </DispatchInfo>
+              </Extinsion>
+            `
+        )}
+      </DipatchInfoList>
+    </ExtensionManifest>
+  `;
+
+  return format(manifest, { indentation: "  ", collapseContent: true });
+}

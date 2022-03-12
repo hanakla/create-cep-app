@@ -1,4 +1,7 @@
 .cache/
 node_modules/
 dist/
+tmp/
+CSXS/
 *.log
+*.release.zip
