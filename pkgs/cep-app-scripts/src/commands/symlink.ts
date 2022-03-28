@@ -2,16 +2,14 @@ import os from "os";
 import { readFileSync, unlinkSync, symlink } from "fs";
 import path from "path";
 import chalk from "chalk";
-import { isProjectRoot } from "../utils/isProjectRoot";
+import { assertProjectRoot } from "../utils/assertProjectRoot";
+import { pkgJson } from "../utils/runtimePackageJson";
 
 export const symlinkCommand = async () => {
-  if (!isProjectRoot()) {
-    console.error(chalk.red`This command must be running on app root dir.`);
-    return;
-  }
+  assertProjectRoot();
 
   const packageJson = JSON.parse(
-    readFileSync(path.posix.join(process.cwd(), "package.json"), {
+    readFileSync(path.posix.join(process.cwd(), pkgJson), {
       encoding: "utf-8",
     })
   );
@@ -41,10 +39,10 @@ export const symlinkCommand = async () => {
   } catch {}
 
   await new Promise<void>((resolve) => {
-    symlink(extensionSourcePath, symlinkPath, (err) => {
+    symlink(extensionSourcePath, symlinkPath!, (err) => {
       // when Windows and disable symlink
       if (err?.code === "EPERM") {
-        symlink(extensionSourcePath, symlinkPath, "junction", (err) => {
+        symlink(extensionSourcePath, symlinkPath!, "junction", (err) => {
           if (err != null) throw new Error();
           resolve();
         });

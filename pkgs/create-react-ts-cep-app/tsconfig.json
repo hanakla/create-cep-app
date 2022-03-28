@@ -1,13 +1,8 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "declaration": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "moduleResolution": "Node",
-    "downlevelIteration": true
+    "declaration": true
   },
-  "files": ["src/index.ts"]
+  "files": ["src/cli.ts"]
 }

@@ -1,4 +1,4 @@
-import { createCEPConfig } from "@hanakla/create-react-ts-cep-app";
+import { createCEPConfig } from "@hanakla/cep-app-scripts";
 
 export default createCEPConfig({
   bundleId: "{{extensionId}}",
@@ -6,6 +6,7 @@ export default createCEPConfig({
   requiredRuntime: { CSXS: "5.0" },
   hostApps: {
     illustrator: { version: "[18.0,99.9]" },
+    // photoshop: { version: "[18.0,99.9]" },
   },
   extensions: [
     {

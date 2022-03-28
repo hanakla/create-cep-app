@@ -4,13 +4,12 @@
   "version": "0.0.0",
   "scripts": {
     "start": "run-p dev:*",
-    "build": "run-s build:*",
-    "build:manifest": "create-react-ts-cep-app manifest",
+    "build": "run-p build:* && cep-app-scripts pack",
+    "build:manifest": "cep-app-scripts manifest",
     "build:host": "parcel build --public-url ./ -d ./dist/host host/index.ts",
     "build:client": "ts-node -T ./node_modules/.bin/webpack",
-    "build:package": "ts-node -T ./build/package.ts",
-    "dev:manifest": "create-react-ts-cep-app manifest",
-    "dev:symlink": "create-react-ts-cep-app symlink",
+    "dev:manifest": "cep-app-scripts manifest",
+    "dev:symlink": "cep-app-scripts symlink",
     "dev:host": "parcel watch --no-hmr --public-url ./ -d ./dist/host host/index.ts",
     "dev:client": "ts-node -T ./node_modules/.bin/webpack --watch"
   },
@@ -27,16 +26,13 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
-    "@hanakla/create-react-ts-cep-app": "0.0.1-beta.6",
+    "@hanakla/cep-app-scripts": "*",
     "@types/domready": "^1.0.0",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.13",
     "@types/styled-components": "^5.1.24",
     "babel-loader": "^8.2.3",
     "babel-plugin-styled-components": "^2.0.6",
-    "cpy": "^9.0.1",
-    "esbuild": "^0.14.25",
-    "esbuild-register": "^3.3.2",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.6.0",
@@ -46,7 +42,6 @@
     "types-for-adobe": "^7.0.0",
     "typescript": "^4.6.2",
     "webpack": "^5.70.0",
-    "webpack-cli": "^4.9.2",
-    "zip-a-folder": "^1.1.3"
+    "webpack-cli": "^4.9.2"
   }
 }

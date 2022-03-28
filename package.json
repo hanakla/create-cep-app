@@ -8,5 +8,11 @@
   "private": true,
   "workspaces": [
     "pkgs/*"
-  ]
+  ],
+  "scripts": {
+    "build": "wsrun -m build"
+  },
+  "devDependencies": {
+    "wsrun": "^5.2.4"
+  }
 }

@@ -68,28 +68,6 @@ export function createCEPConfig(option: CEPConfig) {
   return option;
 }
 
-// createCEPConfig({
-//   requiredRuntime: {
-//     CSXS: "5.0",
-//   },
-//   hostApps: { illustrator: { version: "6.1.0" } },
-//   locales: "All",
-//   extensions: [
-//     {
-//       id: "<app-id>",
-//       version: "0.0.0",
-//       mainPath: "./dist/client/index.html",
-//       scriptPath: "./dist/host/index.js",
-//       lifeCycle: { autoVisible: true },
-//       ui: {
-//         type: "Panel",
-//         menu: "<app-id>",
-//         geometry: { size: { width: 300, height: 300 } },
-//       },
-//     },
-//   ],
-// });
-
 const HostNameMap: { [K in keyof Required<CEPConfig["hostApps"]>]: string[] } =
   {
     photoshop: ["PHXS", "PHSP"],

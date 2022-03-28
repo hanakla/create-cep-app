@@ -1,3 +1,4 @@
 template/yarn.lock
 test/
 bin/
+test-build/

@@ -6,14 +6,14 @@ import { writeFileSync, existsSync, readFileSync } from "fs";
 import validateProjectName from "validate-npm-package-name";
 import prompts from "prompts";
 
-// ncc breaks '*.json' string with __nccwpck_require__
-const THE_JSON = [..."json"].join("");
+// ncc breaks 'package.json' string with __nccwpck_require__
+const pkgJsonName = [..."package.json"].join("");
 
 export function createCommand({
   appName,
   useNpm,
 }: {
-  appName: string;
+  appName: string | null | undefined;
   useNpm: boolean;
 }) {
   const printValidationResults = (errors: string[] = []) => {
@@ -105,10 +105,7 @@ export function createCommand({
     });
 
     {
-      const appPackageJsonPath = path.posix.join(
-        appPath,
-        `package.${THE_JSON}`
-      );
+      const appPackageJsonPath = path.posix.join(appPath, pkgJsonName);
       const appPackageJson = JSON.parse(
         readFileSync(appPackageJsonPath, { encoding: "utf-8" })
       );
