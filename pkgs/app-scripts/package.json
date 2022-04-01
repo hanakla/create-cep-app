@@ -1,6 +1,9 @@
 {
   "name": "@hanakla/cep-app-scripts",
   "version": "0.1.0-rc.1",
+  "description": "@hanakla/create-cep-app building scripts",
+  "author": "Hanakla<hanakla.dev@gmail.com>",
+  "repository": "https://github.com/hanakla/create-cep-app",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

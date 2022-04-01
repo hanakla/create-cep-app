@@ -5,7 +5,7 @@ Create Adobe CEF extension with React/TypeScript
 ## Get started
 
 ```
-npx @hanakla/create-react-ts-cep-app <extension-name-here>
+npx @hanakla/create-cep-app <extension-name-here>
 ```
 
 and
