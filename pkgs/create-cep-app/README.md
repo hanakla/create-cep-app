@@ -18,7 +18,7 @@ yarn start
 ## Default stacks
 
 - TypeScript
-- React / styled-components
+- React / styled-components / Spectrum Web Components
 - Webpack / Parcel
   - Webpack for frontend (for babel-plugin-styled-components)
   - Parcel for host (for ES3 environment bundling)
