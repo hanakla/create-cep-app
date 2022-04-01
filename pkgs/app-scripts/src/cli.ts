@@ -22,14 +22,14 @@ yargs(hideBin(process.argv))
       packCommand();
     }
   )
-  .command(
-    "watch",
-    "Watching changes",
-    (y) => y,
-    () => {
-      watchCommand();
-    }
-  )
+  // .command(
+  //   "watch",
+  //   "Watching changes",
+  //   (y) => y,
+  //   () => {
+  //     watchCommand();
+  //   }
+  // )
   .command(
     "manifest",
     "Build manifest.xml",
