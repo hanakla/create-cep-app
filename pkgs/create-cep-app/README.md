@@ -1,6 +1,13 @@
 # @hanakla/create-cep-app
 
-Create Adobe CEF extension with React/TypeScript
+Create Awesome Adobe CEF extension with React/TypeScript.
+
+## Table of contents
+
+- [Get started](#get-started)
+- [Default technology stacks](#default-technology-stacks)
+- [Configuaring `manifest.xml`](#configuaring-manifest-xml)
+- [Development references](#development-references)
 
 ## Get started
 
@@ -15,7 +22,7 @@ yarn install
 yarn start
 ```
 
-## Default stacks
+## Default technology stacks
 
 - TypeScript
 - React / styled-components / Spectrum Web Components
@@ -63,3 +70,9 @@ export default createCEPConfig({
   ],
 });
 ```
+
+## Development references
+
+- [Adobe-CEP/CEP-Resources](https://github.com/Adobe-CEP/CEP-Resources)
+- [Adobe Extensibility API Docs](https://docsforadobe.dev/)
+- [Illustrator AIHostAdapter プラグイン | Just Diary](https://kawano-shuji.com/justdiary/2022/02/21/illustrator-aihostadapter-plugin/)
