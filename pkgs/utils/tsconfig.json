@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES3",
+    "outDir": "dist",
+    "module": "CommonJS",
+    "esModuleInterop": false,
+    "declaration": true
+  },
+  "files": ["src/index.ts"]
+}

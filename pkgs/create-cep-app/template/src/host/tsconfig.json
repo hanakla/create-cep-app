@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "ES3",
+    // This is required for resolution all types in types-for-adobe
+    "lib": ["ES2015"]
+  },
+  "include": ["./index.ts"]
+}

@@ -1,0 +1,5 @@
+{
+  "extends": "../../tsconfig.json",
+  "files": ["./index.tsx"],
+  "include": ["./components/spectrum-web-components.d.ts"]
+}
