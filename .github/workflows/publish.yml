@@ -1,0 +1,89 @@
+name: Publish to NPM
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "yarn"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build packages
+        run: yarn build
+
+      - name: Create tag helper script
+        run: |
+          cat > get-npm-tag.js << 'EOF'
+          const version = process.argv[2];
+          const tag = version.includes('-') ? version.split('-')[1].split('.')[0] : 'latest';
+          console.log(tag);
+          EOF
+
+      - name: Get create-cep-app tag
+        id: create-cep-app-tag
+        run: |
+          VERSION=$(node -p "require('./pkgs/create-cep-app/package.json').version")
+          TAG=$(node get-npm-tag.js "$VERSION")
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Publish @hanakla/create-cep-app
+        uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          package: pkgs/create-cep-app
+          access: public
+          provenance: true
+          tag: ${{ steps.create-cep-app-tag.outputs.tag }}
+
+      - name: Get cep-utils tag
+        id: cep-utils-tag
+        run: |
+          VERSION=$(node -p "require('./pkgs/utils/package.json').version")
+          TAG=$(node get-npm-tag.js "$VERSION")
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Publish @hanakla/cep-utils
+        uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          package: pkgs/utils
+          access: public
+          provenance: true
+          tag: ${{ steps.cep-utils-tag.outputs.tag }}
+
+      - name: Get cep-app-scripts tag
+        id: cep-app-scripts-tag
+        run: |
+          VERSION=$(node -p "require('./pkgs/app-scripts/package.json').version")
+          TAG=$(node get-npm-tag.js "$VERSION")
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Publish @hanakla/cep-app-scripts
+        uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          package: pkgs/app-scripts
+          access: public
+          provenance: true
+          tag: ${{ steps.cep-app-scripts-tag.outputs.tag }}

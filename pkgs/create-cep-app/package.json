@@ -5,9 +5,7 @@
   "author": "Hanakla<hanakla.dev@gmail.com>",
   "repository": "https://github.com/hanakla/create-cep-app",
   "license": "MIT",
-  "bin": {
-    "create-cep-app": "./bin/index.js"
-  },
+  "bin": "./bin/index.js",
   "scripts": {
     "build": "run-s build:*",
     "build:cli": "tsc --declaration",

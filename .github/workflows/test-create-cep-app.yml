@@ -1,0 +1,48 @@
+name: Test Create CEP App
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  test-create-cep-app:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build packages
+        run: yarn build
+
+      - name: Pack create-cep-app package
+        run: |
+          cd pkgs/create-cep-app
+          yarn pack --filename create-cep-app.tgz
+          echo "PACKAGE_PATH=$(pwd)/create-cep-app.tgz" >> $GITHUB_ENV
+
+      - name: Create test project
+        run: |
+          mkdir test-project
+          cd test-project
+          printf "test-cep-app\ncom.example.test\n" | npx ${{ env.PACKAGE_PATH }}
+
+      - name: Test build
+        run: |
+          cd test-project/test-cep-app
+          npm run build
