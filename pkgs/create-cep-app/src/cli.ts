@@ -8,9 +8,15 @@ yargs(hideBin(process.argv))
   .command(
     "$0",
     "Create Project",
-    (yargs) => yargs.option("use-npm", { type: "boolean", default: false }),
-    ({ useNpm, _ }) => {
-      createCommand({ appName: _[0] as string, useNpm });
+    (yargs) =>
+      yargs
+        .option("use-npm", { type: "boolean", default: false })
+        .option("id", {
+          type: "string",
+          default: "com.example.your-extension",
+        }),
+    ({ useNpm, id, _ }) => {
+      createCommand({ appName: _[0] as string, useNpm, extensionId: id });
     }
   )
   .demandCommand()

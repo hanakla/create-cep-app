@@ -24,11 +24,7 @@ export const watchCommand = async () => {
       console.log(chalk.green`Client scripts compiled`);
     } else {
       console.error(chalk.red`Client scripts compilation error`);
-      console.error(
-        opt.compilation.errors.map(
-          (e) => `Location: ${e.file}${e.loc.index}\n${e.message}\n${e.details}`
-        )
-      );
+      console.error(opt.compilation.errors.map((e) => e.message));
     }
   });
 

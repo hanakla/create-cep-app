@@ -59,8 +59,8 @@ const getAllPageItems = (
   }
 
   if ("uuid" in parent) {
-    if (allItems.items.indexOf(parent) < 0) {
-      allItems.items.push(parent);
+    if (allItems.items.indexOf(parent as any) < 0) {
+      allItems.items.push(parent as any);
     }
   }
 

@@ -5,13 +5,11 @@
   "author": "Hanakla<hanakla.dev@gmail.com>",
   "repository": "https://github.com/hanakla/create-cep-app",
   "license": "MIT",
-  "bin": "./bin/index.js",
+  "bin": "./dist/cli.js",
   "scripts": {
-    "build": "run-s build:*",
-    "build:cli": "tsc --declaration",
-    "dev": "run-p watch:*",
-    "watch:cli": "tsc --declaration --watch",
-    "example": "rm -rf ./test-build; node bin/index.js test-build",
+    "build": "tsc --declaration",
+    "dev": "tsc --declaration --watch",
+    "example": "rm -rf ./test-build; node dist/cli.js test-build --id com.example.test",
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
@@ -26,13 +24,12 @@
   "devDependencies": {
     "@types/dedent": "^0.7.0",
     "@types/mkdirp": "^1.0.2",
-    "@types/node": "^17.0.21",
+    "@types/node": "^22.15.30",
     "@types/prompts": "^2.0.14",
     "@types/validate-npm-package-name": "^3.0.3",
     "@types/yargs": "^17.0.9",
-    "@vercel/ncc": "^0.33.3",
     "npm-run-all": "^4.1.5",
     "ts-node": "^10.7.0",
-    "typescript": "^4.6.2"
+    "typescript": "^5.8.3"
   }
 }

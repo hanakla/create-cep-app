@@ -18,31 +18,65 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: "yarn"
+          node-version: 22
 
       - name: Enable Corepack
         run: corepack enable
 
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: cache-node-modules
+        with:
+          path: |
+            node_modules
+            pkgs/*/node_modules
+            .yarn/cache
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
       - name: Install dependencies
+        id: yarn-install
         run: yarn install --immutable
+        continue-on-error: true
+
+      - name: Save cache on failure
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules
+            pkgs/*/node_modules
+            .yarn/cache
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}-${{ steps.yarn-install.outcome }}
+
+      - name: Fail if yarn install failed
+        if: steps.yarn-install.outcome == 'failure'
+        run: exit 1
 
       - name: Build packages
         run: yarn build
 
-      - name: Pack create-cep-app package
-        run: |
-          cd pkgs/create-cep-app
-          yarn pack --filename create-cep-app.tgz
-          echo "PACKAGE_PATH=$(pwd)/create-cep-app.tgz" >> $GITHUB_ENV
-
       - name: Create test project
         run: |
-          mkdir test-project
-          cd test-project
-          printf "test-cep-app\ncom.example.test\n" | npx ${{ env.PACKAGE_PATH }}
+          cd pkgs/create-cep-app
+          yarn example
 
-      - name: Test build
+      - name: Install packages in test project
         run: |
-          cd test-project/test-cep-app
-          npm run build
+          cd pkgs/create-cep-app/test-build
+          # Update package.json directly to use local packages
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            pkg.dependencies['@hanakla/cep-utils'] = 'file:../../utils';
+            pkg.devDependencies['@hanakla/cep-app-scripts'] = 'file:../../app-scripts';
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+          "
+          # Install dependencies
+          yarn install
+
+      - name: Build test project
+        run: |
+          cd pkgs/create-cep-app/test-build
+          yarn build

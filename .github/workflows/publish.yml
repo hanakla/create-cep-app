@@ -10,7 +10,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: always()
 
     steps:
       - name: Checkout repository
@@ -20,14 +20,41 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: "yarn"
           registry-url: "https://registry.npmjs.org"
 
       - name: Enable Corepack
         run: corepack enable
 
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: cache-node-modules
+        with:
+          path: |
+            node_modules
+            pkgs/*/node_modules
+            .yarn/cache
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
       - name: Install dependencies
+        id: yarn-install
         run: yarn install --immutable
+        continue-on-error: true
+
+      - name: Save cache on failure
+        if: always() && steps.cache-node-modules.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules
+            pkgs/*/node_modules
+            .yarn/cache
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}-${{ steps.yarn-install.outcome }}
+
+      - name: Fail if yarn install failed
+        if: steps.yarn-install.outcome == 'failure'
+        run: exit 1
 
       - name: Build packages
         run: yarn build

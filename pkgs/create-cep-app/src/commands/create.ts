@@ -6,14 +6,13 @@ import { writeFileSync, existsSync, readFileSync, renameSync } from "fs";
 import validateProjectName from "validate-npm-package-name";
 import prompts from "prompts";
 
-// ncc breaks 'package.json' string with __nccwpck_require__
-const pkgJsonName = [..."package.json"].join("");
-
 export function createCommand({
   appName,
+  extensionId,
   useNpm,
 }: {
   appName: string | null | undefined;
+  extensionId: string | null | undefined;
   useNpm: boolean;
 }) {
   const printValidationResults = (errors: string[] = []) => {
@@ -59,8 +58,7 @@ export function createCommand({
       }
     }
 
-    let extensionId: string;
-    {
+    if (!extensionId) {
       extensionId = (
         await prompts({
           type: "text",
@@ -96,7 +94,7 @@ export function createCommand({
         markDirectories: true,
         ignore: ["./yarn.lock"],
         ignoreFiles: ["gitignore", "npmignore"],
-        cwd: path.posix.join(__dirname, "../template"),
+        cwd: path.posix.join(__dirname, "../../template"),
         rename: (name) => {
           if (name === "gitignore") return ".gitignore";
           if (name === "npmignore") return ".npmignore";
@@ -112,7 +110,7 @@ export function createCommand({
     }
 
     {
-      const appPackageJsonPath = path.posix.join(appPath, pkgJsonName);
+      const appPackageJsonPath = path.posix.join(appPath, "package.json");
       const appPackageJson = JSON.parse(
         readFileSync(appPackageJsonPath, { encoding: "utf-8" })
       );
@@ -127,6 +125,7 @@ export function createCommand({
     }
 
     {
+      let extId = extensionId;
       const templateFiles = [
         path.posix.join(appPath, "manifest.config.ts"),
         path.posix.join(appPath, ".debug"),
@@ -137,12 +136,14 @@ export function createCommand({
         writeFileSync(
           path,
           manifest
-            .replace(/{{extensionId}}/g, extensionId)
+            .replace(/{{extensionId}}/g, extId)
             .replace(/{{appName}}/g, appName!),
           { encoding: "utf-8" }
         );
       });
     }
+
+    console.log("✅ App template files copied");
 
     {
       const packageCommands: [string, string[]][] = useNpm
@@ -159,6 +160,7 @@ export function createCommand({
             env: { ...process.env },
           }).on("close", (code) => {
             if (code !== 0) {
+              console.error(chalk.red(`😱 Failed to install dependencies`));
               reject(new Error("`yarn install` failed"));
               return;
             }

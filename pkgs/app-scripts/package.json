@@ -9,21 +9,19 @@
   "types": "dist/index.d.ts",
   "bin": "./bin/index.js",
   "scripts": {
-    "build": "run-p build:*",
-    "build:cli": "tsc --declaration",
-    "watch": "run-p watch:*",
-    "watch:cli": "tsc --watch --declaration",
+    "build": "tsc --declaration",
+    "watch": "tsc --watch --declaration",
     "prepublishOnly": "yarn build"
   },
   "optionalDependencies": {
     "xml-formatter": "^2.6.1"
   },
   "devDependencies": {
-    "@types/node": "^17.0.21",
-    "@types/webpack": "^5.28.0",
+    "@types/node": "^22.15.0",
     "@vercel/ncc": "^0.33.3",
     "npm-run-all": "^4.1.5",
-    "typescript": "^4.6.3"
+    "typescript": "^5.8.3",
+    "webpack": "^5.99.9"
   },
   "dependencies": {
     "chalk": "^5.0.1",
