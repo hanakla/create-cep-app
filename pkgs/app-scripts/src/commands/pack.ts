@@ -15,21 +15,21 @@ export const packCommand = async () => {
     readFileSync(path.posix.join(appPath, pkgJson), { encoding: "utf-8" })
   );
   const tmpPath = path.posix.join(appPath, "tmp/package");
+  const zipFileName = `releases/${appName}-${version}.release.zip`;
 
-  cpy(["./CSXS", "./dist", "./icons", "./package.json"], "tmp/package", {
+  await cpy(["./CSXS", "./dist", "./icons", "./package.json"], "tmp/package", {
     markDirectories: true,
     cwd: appPath,
-  })
-    .then(() => {
-      return mkdirp(path.posix.join(appPath, "releases"));
-    })
-    .then(() => {
-      return zip(
-        path.posix.join(appPath, "tmp/package"),
-        path.posix.join(appPath, `releases/${appName}-${version}.release.zip`)
-      );
-    })
-    .then(() => {
-      return rm(tmpPath, { recursive: true, force: true });
-    });
+  });
+
+  await mkdirp(path.posix.join(appPath, "releases"));
+
+  await zip(
+    path.posix.join(appPath, "tmp/package"),
+    path.posix.join(appPath, zipFileName)
+  );
+
+  await rm(tmpPath, { recursive: true, force: true });
+
+  console.log(`🫶 Pack your extension successfully: ${zipFileName}`);
 };
