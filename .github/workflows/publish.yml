@@ -10,7 +10,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    if: always()
+    environment: CI
 
     steps:
       - name: Checkout repository
