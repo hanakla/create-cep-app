@@ -92,7 +92,7 @@ export function createCommand({
       await cpy(["./**/*"], appPath, {
         dot: true,
         markDirectories: true,
-        ignore: ["./yarn.lock"],
+        ignore: ["./yarn.lock", ...(useNpm ? [".yarnrc.yml"] : [])],
         ignoreFiles: ["gitignore", "npmignore"],
         cwd: path.posix.join(__dirname, "../../template"),
         rename: (name) => {
