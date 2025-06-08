@@ -1,6 +1,6 @@
 {
   "name": "@hanakla/cep-app-scripts",
-  "version": "0.1.0-rc.2",
+  "version": "0.1.0",
   "description": "@hanakla/create-cep-app building scripts",
   "author": "Hanakla<hanakla.dev@gmail.com>",
   "homepage": "https://github.com/hanakla/create-cep-app",

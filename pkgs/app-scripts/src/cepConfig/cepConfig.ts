@@ -123,9 +123,9 @@ export function buildManifest(option: CEPManifest) {
                       ext.cefCommandLine != null &&
                       `
                         <CEFCommandLine>
-                          ${ext.cefCommandLine.map(
-                            (param) => `<Parameter>${param}</Parameter>`
-                          )}
+                          ${ext.cefCommandLine
+                            .map((param) => `<Parameter>${param}</Parameter>`)
+                            .join("")}
                         </CEFCommandLine>
                       `
                     }
