@@ -1,31 +1,29 @@
 {
   "name": "@hanakla/cep-utils",
-  "version": "0.1.0-rc.2",
+  "version": "0.1.0",
   "description": "Create Adobe CEF extension with React/TypeScript",
   "author": "Hanakla<hanakla.dev@gmail.com>",
   "repository": "https://github.com/hanakla/create-cep-app",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "bin": {
-    "create-react-ts-cep-app": "./bin/index.js"
+  "module": "dist/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "module": "./dist/index.mjs"
+    }
   },
   "scripts": {
-    "build": "run-p build:*",
-    "build:cli": "tsc-transpile-only --declaration",
-    "watch": "run-p watch:*",
-    "watch:cli": "tsc-transpile-only --watch --declaration",
+    "build": "tsup",
+    "watch": "tsup --watch",
     "prepublishOnly": "yarn build"
   },
-  "dependencies": {},
   "devDependencies": {
-    "@hanakla/arma": "^0.3.1",
-    "@types/node": "^17.0.21",
-    "bili": "^5.0.5",
-    "npm-run-all": "^4.1.5",
-    "rollup-plugin-typescript2": "^0.31.2",
-    "types-for-adobe": "^7.0.0",
-    "typescript": "^4.6.2",
-    "typescript-transpile-only": "^0.0.4"
+    "@swc/core": "^1.11.31",
+    "@types/node": "^22.15.0",
+    "tsup": "^8.5.0",
+    "types-for-adobe": "^7.0.0"
   }
 }

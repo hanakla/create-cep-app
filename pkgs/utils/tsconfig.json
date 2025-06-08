@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES3",
+    "target": "es3",
     "outDir": "dist",
     "module": "CommonJS",
     "esModuleInterop": false,
