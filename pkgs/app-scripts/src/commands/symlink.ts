@@ -46,7 +46,9 @@ export const symlinkCommand = async () => {
       try {
         await symlink(extensionSourcePath, symlinkPath!, "junction");
       } catch (e) {
-        console.error(chalk.red.bold`Failed to create symlink: ${e.message}`);
+        console.error(
+          chalk.red.bold`Failed to create symlink: ${(e as any).message}`
+        );
         throw e;
       }
     }
