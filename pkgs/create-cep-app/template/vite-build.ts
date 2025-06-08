@@ -1,17 +1,13 @@
 import { parseArgs } from "node:util";
 import { build } from "vite";
 import react from "@vitejs/plugin-react-swc";
-import tailwindcss from '@tailwindcss/vite'
-
+import tailwindcss from "@tailwindcss/vite";
 
 (async () => {
   const { isDevelopment } = getArgs();
 
   build({
-    plugins: [
-      react({})
-      tailwindcss(),
-    ],
+    plugins: [react({}), tailwindcss()],
     build: {
       outDir: "dist/client",
       watch: isDevelopment
