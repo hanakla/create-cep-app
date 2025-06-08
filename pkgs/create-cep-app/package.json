@@ -3,9 +3,15 @@
   "version": "0.1.0-rc.2",
   "description": "Create Adobe CEF extension with React/TypeScript",
   "author": "Hanakla<hanakla.dev@gmail.com>",
-  "repository": "https://github.com/hanakla/create-cep-app",
+  "homepage": "https://github.com/hanakla/create-cep-app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanakla/create-cep-app.git"
+  },
   "license": "MIT",
-  "bin": "./dist/cli.js",
+  "bin": {
+    "create-cep-app": "dist/cli.js"
+  },
   "scripts": {
     "build": "tsc --declaration",
     "dev": "tsc --declaration --watch",
