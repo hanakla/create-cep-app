@@ -25,10 +25,8 @@ yarn start
 ## Default technology stacks
 
 - TypeScript
-- React / styled-components / Spectrum Web Components
-- Webpack / Parcel
-  - Webpack for frontend (for babel-plugin-styled-components)
-  - Parcel for host (for ES3 environment bundling)
+- React / Tailwind v4 / Spectrum Web Components
+- Vite
 
 ## Configuaring `manifest.xml`
 

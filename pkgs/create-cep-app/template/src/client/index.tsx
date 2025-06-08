@@ -1,5 +1,5 @@
 /// <reference path="./components/spectrum-web-components.d.ts" />
-import type { RGBColor } from "csinterface";
+import type { RGBColor } from "@extendscript/csinterface";
 
 import "@spectrum-web-components/bundle/elements";
 import "@spectrum-web-components/icons/sp-icons-medium";

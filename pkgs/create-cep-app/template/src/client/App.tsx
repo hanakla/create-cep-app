@@ -13,23 +13,10 @@ export function App() {
   return (
     <>
       <GlobalStyle />
-      <h1
-        css={`
-          margin-bottom: 16px;
-          font-size: 24px;
-          font-weight: bold;
-        `}
-      >
+      <h1 className="mb-4 text-2xl font-bold">
         THIS IS
         <br />
-        <span
-          css={`
-            display: inline-block;
-            padding: 0 4px;
-            background-color: rgba(51, 51, 51, 0.5);
-            border-radius: 4px;
-          `}
-        >
+        <span className="inline-block px-1 bg-gray-800/50 rounded">
           @hanakla/create-cep-app
         </span>
         <br />

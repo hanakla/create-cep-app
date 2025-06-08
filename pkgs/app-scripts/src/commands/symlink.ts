@@ -1,5 +1,5 @@
 import os from "os";
-import { readFileSync, unlinkSync, symlink } from "fs";
+import { readFile, unlink, symlink } from "fs/promises";
 import path from "path";
 import chalk from "chalk";
 import { assertProjectRoot } from "../utils/assertProjectRoot";
@@ -9,7 +9,7 @@ export const symlinkCommand = async () => {
   assertProjectRoot();
 
   const packageJson = JSON.parse(
-    readFileSync(path.posix.join(process.cwd(), pkgJson), {
+    await readFile(path.posix.join(process.cwd(), pkgJson), {
       encoding: "utf-8",
     })
   );
@@ -35,22 +35,22 @@ export const symlinkCommand = async () => {
     throw new Error(`Unexpected platform ${os.platform()} / ${process.arch}`);
 
   try {
-    unlinkSync(symlinkPath);
+    await unlink(symlinkPath);
   } catch {}
 
-  await new Promise<void>((resolve) => {
-    symlink(extensionSourcePath, symlinkPath!, (err) => {
-      // when Windows and disable symlink
-      if (err?.code === "EPERM") {
-        symlink(extensionSourcePath, symlinkPath!, "junction", (err) => {
-          if (err != null) throw new Error();
-          resolve();
-        });
-      } else {
-        resolve();
+  try {
+    await symlink(extensionSourcePath, symlinkPath!);
+  } catch (err) {
+    // when Windows and disable symlink
+    if ((err as any).code === "EPERM") {
+      try {
+        await symlink(extensionSourcePath, symlinkPath!, "junction");
+      } catch (e) {
+        console.error(chalk.red.bold`Failed to create symlink: ${e.message}`);
+        throw e;
       }
-    });
-  });
+    }
+  }
 
-  console.log(chalk.green.bold`Symlink created to ${symlinkPath}`);
+  console.log(chalk.green.bold`Extension Symlink created to ${symlinkPath!}`);
 };
