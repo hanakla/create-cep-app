@@ -8,11 +8,6 @@ import { packCommand } from "./commands/pack";
 import { symlinkCommand } from "./commands/symlink";
 import { watchCommand } from "./commands/watch";
 
-const r = eval("require"); // Escape from ncc's require handling
-r(r.resolve("ts-node", { paths: [process.cwd()] })).register({
-  transpileOnly: true,
-});
-
 yargs(hideBin(process.argv))
   .command(
     "pack",
