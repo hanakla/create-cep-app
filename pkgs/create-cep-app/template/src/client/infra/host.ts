@@ -1,6 +1,7 @@
-import { MessageTypes, ResponseTypes } from "../../shared/MessageTypes";
-import { csInterface, CSInterface } from "./csInterface";
+import type { MessageTypes, ResponseTypes } from "../../shared/MessageTypes";
+import { CSInterface, csInterface } from "./csInterface";
 
+/** Reloading the host script */
 export async function reloadHostScript() {
   const extPath =
     csInterface.getSystemPath(CSInterface.SystemPath.EXTENSION) +

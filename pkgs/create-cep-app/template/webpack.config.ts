@@ -1,8 +1,8 @@
-import webpack, { Configuration } from "webpack";
+import ForkTSCheckerPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import ForkTSCheckerPlugin from "fork-ts-checker-webpack-plugin";
 import path from "path";
+import webpack, { type Configuration } from "webpack";
 
 export default (): Configuration => {
   return {

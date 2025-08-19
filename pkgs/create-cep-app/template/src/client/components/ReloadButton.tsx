@@ -10,15 +10,7 @@ export const ReloadButton = () => {
   }
 
   return (
-    <div
-      css={`
-        position: fixed;
-        right: 8px;
-        bottom: 8px;
-        padding: 8px;
-      `}
-      onClick={handleClick}
-    >
+    <div className="fixed right-2 b-2 p-2" onClick={handleClick}>
       <sp-icon-refresh size="s" />
     </div>
   );

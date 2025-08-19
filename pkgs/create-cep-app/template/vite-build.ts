@@ -1,18 +1,21 @@
 import { parseArgs } from "node:util";
-import { build } from "vite";
-import react from "@vitejs/plugin-react-swc";
 import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react-swc";
+import { build } from "vite";
 
 (async () => {
   const { isDevelopment } = getArgs();
 
+  // Build for CEP client script
   build({
+    root: "src/client",
+    base: "./",
     plugins: [react({}), tailwindcss()],
     build: {
-      outDir: "dist/client",
+      outDir: "../../dist/client",
       watch: isDevelopment
         ? {
-            include: ["src/**/*"],
+            include: ["../**/*"],
           }
         : null,
       rollupOptions: {

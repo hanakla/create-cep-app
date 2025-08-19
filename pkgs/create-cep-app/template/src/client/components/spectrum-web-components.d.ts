@@ -1,3 +1,6 @@
+import type React from "react";
+import "@spectrum-web-components/bundle/elements.js";
+
 declare namespace _Components {
   type Filter<T, A> = T extends A ? T : never;
 
@@ -22,10 +25,8 @@ declare namespace _Components {
   };
 }
 
-// type _ = SpectrumElementTypes["sp-button"]["size"];
-// type Button = keyof SpectrumElements["sp-button"] // ["size"];
-// type _ = Button['variant']// ["size"];
-
-declare namespace JSX {
-  interface IntrinsicElements extends _Components.SpectrumElementTypes {}
+declare module "react" {
+  namespace JSX {
+    interface IntrinsicElements extends _Components.SpectrumElementTypes {}
+  }
 }

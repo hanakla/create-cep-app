@@ -1,9 +1,6 @@
-import type {} from "styled-components/cssprop";
-
 import { useCallback } from "react";
-import { postMessageToHost } from "./infra/host";
-import GlobalStyle from "./styles/GlobalStyle";
 import { ReloadButton } from "./components/ReloadButton";
+import { postMessageToHost } from "./infra/host";
 
 export function App() {
   const handleClickAlertButton = useCallback(async () => {
@@ -12,7 +9,6 @@ export function App() {
 
   return (
     <>
-      <GlobalStyle />
       <h1 className="mb-4 text-2xl font-bold">
         THIS IS
         <br />

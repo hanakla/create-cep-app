@@ -1,13 +1,11 @@
-import { csInterface, CSInterface } from "../infra/csInterface";
+import { CSInterface, csInterface } from "../infra/csInterface";
 
 /*
     Responsible for overwriting CSS at runtime according to CC app
     settings as defined by the end user.
 */
 
-export const themeManager = (function () {
-  "use strict";
-
+export const themeManager = (() => {
   /**
    * Convert the Color object to string in hexadecimal format;
    */
