@@ -5,6 +5,97 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
+"@biomejs/biome@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@biomejs/biome@npm:2.2.0"
+  dependencies:
+    "@biomejs/cli-darwin-arm64": "npm:2.2.0"
+    "@biomejs/cli-darwin-x64": "npm:2.2.0"
+    "@biomejs/cli-linux-arm64": "npm:2.2.0"
+    "@biomejs/cli-linux-arm64-musl": "npm:2.2.0"
+    "@biomejs/cli-linux-x64": "npm:2.2.0"
+    "@biomejs/cli-linux-x64-musl": "npm:2.2.0"
+    "@biomejs/cli-win32-arm64": "npm:2.2.0"
+    "@biomejs/cli-win32-x64": "npm:2.2.0"
+  dependenciesMeta:
+    "@biomejs/cli-darwin-arm64":
+      optional: true
+    "@biomejs/cli-darwin-x64":
+      optional: true
+    "@biomejs/cli-linux-arm64":
+      optional: true
+    "@biomejs/cli-linux-arm64-musl":
+      optional: true
+    "@biomejs/cli-linux-x64":
+      optional: true
+    "@biomejs/cli-linux-x64-musl":
+      optional: true
+    "@biomejs/cli-win32-arm64":
+      optional: true
+    "@biomejs/cli-win32-x64":
+      optional: true
+  bin:
+    biome: bin/biome
+  checksum: 10c0/092ee79cad7f253427499aa193374e4c1fe5935be916d426f96fd1b8864b9c95f623d447c096894a4f864a15618c965f71863987c7afdcf77e5cdb79ec28fecd
+  languageName: node
+  linkType: hard
+
+"@biomejs/cli-darwin-arm64@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@biomejs/cli-darwin-arm64@npm:2.2.0"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@biomejs/cli-darwin-x64@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@biomejs/cli-darwin-x64@npm:2.2.0"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@biomejs/cli-linux-arm64-musl@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@biomejs/cli-linux-arm64-musl@npm:2.2.0"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@biomejs/cli-linux-arm64@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@biomejs/cli-linux-arm64@npm:2.2.0"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@biomejs/cli-linux-x64-musl@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@biomejs/cli-linux-x64-musl@npm:2.2.0"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@biomejs/cli-linux-x64@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@biomejs/cli-linux-x64@npm:2.2.0"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@biomejs/cli-win32-arm64@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@biomejs/cli-win32-arm64@npm:2.2.0"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@biomejs/cli-win32-x64@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@biomejs/cli-win32-x64@npm:2.2.0"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@esbuild/aix-ppc64@npm:0.25.5":
   version: 0.25.5
   resolution: "@esbuild/aix-ppc64@npm:0.25.5"
@@ -184,15 +275,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hanakla/cep-app-scripts@workspace:pkgs/app-scripts"
   dependencies:
-    "@types/node": "npm:^22.15.0"
-    "@vercel/ncc": "npm:^0.33.3"
+    "@types/node": "npm:22.15.0"
+    "@vercel/ncc": "npm:0.33.3"
     chalk: "npm:^5.0.1"
     cpy: "npm:^9.0.0"
     esbuild: "npm:^0.14.28"
     esbuild-register: "npm:^3.3.2"
-    npm-run-all: "npm:^4.1.5"
-    typescript: "npm:^5.8.3"
-    webpack: "npm:^5.99.9"
+    npm-run-all: "npm:4.1.5"
+    typescript: "npm:5.8.3"
+    webpack: "npm:5.99.9"
     xml-formatter: "npm:^2.6.1"
     yargs: "npm:^17.3.1"
     zip-a-folder: "npm:^1.1.3"
@@ -208,10 +299,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hanakla/cep-utils@workspace:pkgs/utils"
   dependencies:
-    "@swc/core": "npm:^1.11.31"
-    "@types/node": "npm:^22.15.0"
-    tsup: "npm:^8.5.0"
-    types-for-adobe: "npm:^7.0.0"
+    "@swc/core": "npm:1.11.31"
+    "@types/node": "npm:22.15.0"
+    tsup: "npm:8.5.0"
+    types-for-adobe: "npm:7.0.0"
   languageName: unknown
   linkType: soft
 
@@ -598,7 +689,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core@npm:^1.11.31":
+"@swc/core@npm:1.11.31":
   version: 1.11.31
   resolution: "@swc/core@npm:1.11.31"
   dependencies:
@@ -764,7 +855,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.15.0, @types/node@npm:^22.15.30":
+"@types/node@npm:22.15.0":
+  version: 22.15.0
+  resolution: "@types/node@npm:22.15.0"
+  dependencies:
+    undici-types: "npm:~6.21.0"
+  checksum: 10c0/f60c716f473ec7cbb6fffd8488d29a9ea697f4f5d71c1ebca72e17cdce1c7df054c295122a2589463c44490d875f485f9251ada3c3167bdbe4fbe8a677059780
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^22.15.30":
   version: 22.15.30
   resolution: "@types/node@npm:22.15.30"
   dependencies:
@@ -814,7 +914,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/ncc@npm:^0.33.3":
+"@vercel/ncc@npm:0.33.3":
   version: 0.33.3
   resolution: "@vercel/ncc@npm:0.33.3"
   dependencies:
@@ -1546,6 +1646,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "create-react-ts-cep-app@workspace:."
   dependencies:
+    "@biomejs/biome": "npm:^2.2.0"
+    lefthook: "npm:^1.12.3"
     wsrun: "npm:^5.2.4"
   languageName: unknown
   linkType: soft
@@ -2823,6 +2925,117 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lefthook-darwin-arm64@npm:1.12.3":
+  version: 1.12.3
+  resolution: "lefthook-darwin-arm64@npm:1.12.3"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-darwin-x64@npm:1.12.3":
+  version: 1.12.3
+  resolution: "lefthook-darwin-x64@npm:1.12.3"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-freebsd-arm64@npm:1.12.3":
+  version: 1.12.3
+  resolution: "lefthook-freebsd-arm64@npm:1.12.3"
+  conditions: os=freebsd & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-freebsd-x64@npm:1.12.3":
+  version: 1.12.3
+  resolution: "lefthook-freebsd-x64@npm:1.12.3"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-linux-arm64@npm:1.12.3":
+  version: 1.12.3
+  resolution: "lefthook-linux-arm64@npm:1.12.3"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-linux-x64@npm:1.12.3":
+  version: 1.12.3
+  resolution: "lefthook-linux-x64@npm:1.12.3"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-openbsd-arm64@npm:1.12.3":
+  version: 1.12.3
+  resolution: "lefthook-openbsd-arm64@npm:1.12.3"
+  conditions: os=openbsd & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-openbsd-x64@npm:1.12.3":
+  version: 1.12.3
+  resolution: "lefthook-openbsd-x64@npm:1.12.3"
+  conditions: os=openbsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-windows-arm64@npm:1.12.3":
+  version: 1.12.3
+  resolution: "lefthook-windows-arm64@npm:1.12.3"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-windows-x64@npm:1.12.3":
+  version: 1.12.3
+  resolution: "lefthook-windows-x64@npm:1.12.3"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook@npm:^1.12.3":
+  version: 1.12.3
+  resolution: "lefthook@npm:1.12.3"
+  dependencies:
+    lefthook-darwin-arm64: "npm:1.12.3"
+    lefthook-darwin-x64: "npm:1.12.3"
+    lefthook-freebsd-arm64: "npm:1.12.3"
+    lefthook-freebsd-x64: "npm:1.12.3"
+    lefthook-linux-arm64: "npm:1.12.3"
+    lefthook-linux-x64: "npm:1.12.3"
+    lefthook-openbsd-arm64: "npm:1.12.3"
+    lefthook-openbsd-x64: "npm:1.12.3"
+    lefthook-windows-arm64: "npm:1.12.3"
+    lefthook-windows-x64: "npm:1.12.3"
+  dependenciesMeta:
+    lefthook-darwin-arm64:
+      optional: true
+    lefthook-darwin-x64:
+      optional: true
+    lefthook-freebsd-arm64:
+      optional: true
+    lefthook-freebsd-x64:
+      optional: true
+    lefthook-linux-arm64:
+      optional: true
+    lefthook-linux-x64:
+      optional: true
+    lefthook-openbsd-arm64:
+      optional: true
+    lefthook-openbsd-x64:
+      optional: true
+    lefthook-windows-arm64:
+      optional: true
+    lefthook-windows-x64:
+      optional: true
+  bin:
+    lefthook: bin/index.js
+  checksum: 10c0/3819d8146491cfb9c42573c7f1bf3660fcb9216c60dcc4d21093aea793227ba3d67b49651c48377af260f217cc0d6e6c951d5f23f2e18ce0848105bb835b95bc
+  languageName: node
+  linkType: hard
+
 "lilconfig@npm:^3.1.1":
   version: 3.1.3
   resolution: "lilconfig@npm:3.1.3"
@@ -3240,7 +3453,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"npm-run-all@npm:^4.1.5":
+"npm-run-all@npm:4.1.5, npm-run-all@npm:^4.1.5":
   version: 4.1.5
   resolution: "npm-run-all@npm:4.1.5"
   dependencies:
@@ -4417,7 +4630,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsup@npm:^8.5.0":
+"tsup@npm:8.5.0":
   version: 8.5.0
   resolution: "tsup@npm:8.5.0"
   dependencies:
@@ -4459,14 +4672,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"types-for-adobe@npm:^7.0.0":
+"types-for-adobe@npm:7.0.0":
   version: 7.0.0
   resolution: "types-for-adobe@npm:7.0.0"
   checksum: 10c0/8805438852ed0dfc2584c2adea2b78397a7eb84b8ab161f15570c5d490dd4f148ca9e32cbae162d338d805f4e82ab92f043d788b8c4951ebb7129641f4dae200
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.8.3":
+"typescript@npm:5.8.3, typescript@npm:^5.8.3":
   version: 5.8.3
   resolution: "typescript@npm:5.8.3"
   bin:
@@ -4476,7 +4689,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.8.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.8.3#optional!builtin<compat/typescript>":
   version: 5.8.3
   resolution: "typescript@patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>::version=5.8.3&hash=5786d5"
   bin:
@@ -4594,7 +4807,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.99.9":
+"webpack@npm:5.99.9":
   version: 5.99.9
   resolution: "webpack@npm:5.99.9"
   dependencies:
