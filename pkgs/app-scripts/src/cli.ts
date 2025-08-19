@@ -15,7 +15,7 @@ yargs(hideBin(process.argv))
     (y) => y,
     () => {
       packCommand();
-    }
+    },
   )
   // .command(
   //   "watch",
@@ -31,7 +31,7 @@ yargs(hideBin(process.argv))
     (y) => y,
     () => {
       manifestCommand();
-    }
+    },
   )
   .command(
     "symlink",
@@ -39,7 +39,7 @@ yargs(hideBin(process.argv))
     (y) => y,
     () => {
       symlinkCommand();
-    }
+    },
   )
   .demandCommand()
   .parse();

@@ -28,7 +28,7 @@ domready(async () => {
   createRoot(document.getElementById("app")!).render(
     <ThemeListener>
       <App />
-    </ThemeListener>
+    </ThemeListener>,
   );
 });
 
@@ -51,13 +51,13 @@ const ThemeListener = ({ children }: { children: ReactNode }) => {
 
     csInterface.addEventListener(
       CSInterface.THEME_COLOR_CHANGED_EVENT,
-      onThemeChange
+      onThemeChange,
     );
 
     return () =>
       csInterface.removeEventListener(
         CSInterface.THEME_COLOR_CHANGED_EVENT,
-        onThemeChange
+        onThemeChange,
       );
   });
 

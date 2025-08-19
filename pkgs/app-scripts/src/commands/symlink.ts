@@ -1,7 +1,7 @@
-import os from "os";
-import { readFile, unlink, symlink } from "fs/promises";
-import path from "path";
 import chalk from "chalk";
+import { readFile, symlink, unlink } from "fs/promises";
+import os from "os";
+import path from "path";
 import { assertProjectRoot } from "../utils/assertProjectRoot";
 import { pkgJson } from "../utils/runtimePackageJson";
 
@@ -11,7 +11,7 @@ export const symlinkCommand = async () => {
   const packageJson = JSON.parse(
     await readFile(path.posix.join(process.cwd(), pkgJson), {
       encoding: "utf-8",
-    })
+    }),
   );
   const { name } = packageJson;
 
@@ -21,7 +21,7 @@ export const symlinkCommand = async () => {
   if (os.platform() === "darwin") {
     symlinkPath = path.posix.join(
       os.homedir(),
-      `./Library/Application Support/Adobe/CEP/extensions/${name}`
+      `./Library/Application Support/Adobe/CEP/extensions/${name}`,
     );
   } else if (os.platform() === "win32") {
     if (process.arch === "x64") {
@@ -47,7 +47,7 @@ export const symlinkCommand = async () => {
         await symlink(extensionSourcePath, symlinkPath!, "junction");
       } catch (e) {
         console.error(
-          chalk.red.bold`Failed to create symlink: ${(e as any).message}`
+          chalk.red.bold`Failed to create symlink: ${(e as any).message}`,
         );
         throw e;
       }

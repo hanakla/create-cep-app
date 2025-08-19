@@ -1,10 +1,10 @@
 import chalk from "chalk";
-import cpy from "cpy";
-import path from "path";
 import { spawn } from "child_process";
-import { writeFileSync, existsSync, readFileSync, renameSync } from "fs";
-import validateProjectName from "validate-npm-package-name";
+import cpy from "cpy";
+import { existsSync, readFileSync, renameSync, writeFileSync } from "fs";
+import path from "path";
 import prompts from "prompts";
+import validateProjectName from "validate-npm-package-name";
 
 export function createCommand({
   appName,
@@ -37,8 +37,8 @@ export function createCommand({
         console.log(`${chalk.red("Please specify the project directory:")}`);
         console.log(
           `  ${chalk.cyan("create-react-ts-manifest-app")} ${chalk.green(
-            "<project-directory>"
-          )}`
+            "<project-directory>",
+          )}`,
         );
         console.log();
 
@@ -80,39 +80,36 @@ export function createCommand({
       console.log();
       console.log(chalk.red(`Project directory \`${appName}\` already exists`));
       console.log(
-        chalk.red("Please remove it or specify another project-directory")
+        chalk.red("Please remove it or specify another project-directory"),
       );
       console.log();
 
       process.exit(1);
     }
-
-    {
-      console.log("Copying files... to ", appPath);
-      await cpy(["./**/*"], appPath, {
-        dot: true,
-        markDirectories: true,
-        ignore: ["./yarn.lock", ...(useNpm ? [".yarnrc.yml"] : [])],
-        ignoreFiles: ["gitignore", "npmignore"],
-        cwd: path.posix.join(__dirname, "../../template"),
-        rename: (name) => {
-          if (name === "gitignore") return ".gitignore";
-          if (name === "npmignore") return ".npmignore";
-          if (name === "dot-debug") return ".debug";
-          if (name === "dot-keep") return ".keep";
-          return name;
-        },
-      });
-      renameSync(
-        path.posix.join(appPath, "vscode"),
-        path.posix.join(appPath, ".vscode")
-      );
-    }
+    console.log("Copying files... to ", appPath);
+    await cpy(["./**/*"], appPath, {
+      dot: true,
+      markDirectories: true,
+      ignore: ["./yarn.lock", ...(useNpm ? [".yarnrc.yml"] : [])],
+      ignoreFiles: ["gitignore", "npmignore"],
+      cwd: path.posix.join(__dirname, "../../template"),
+      rename: (name) => {
+        if (name === "gitignore") return ".gitignore";
+        if (name === "npmignore") return ".npmignore";
+        if (name === "dot-debug") return ".debug";
+        if (name === "dot-keep") return ".keep";
+        return name;
+      },
+    });
+    renameSync(
+      path.posix.join(appPath, "vscode"),
+      path.posix.join(appPath, ".vscode"),
+    );
 
     {
       const appPackageJsonPath = path.posix.join(appPath, "package.json");
       const appPackageJson = JSON.parse(
-        readFileSync(appPackageJsonPath, { encoding: "utf-8" })
+        readFileSync(appPackageJsonPath, { encoding: "utf-8" }),
       );
       appPackageJson.name = appName;
       writeFileSync(
@@ -120,12 +117,12 @@ export function createCommand({
         JSON.stringify(appPackageJson, null, "  "),
         {
           encoding: "utf-8",
-        }
+        },
       );
     }
 
     {
-      let extId = extensionId;
+      const extId = extensionId;
       const templateFiles = [
         path.posix.join(appPath, "manifest.config.ts"),
         path.posix.join(appPath, ".debug"),
@@ -138,7 +135,7 @@ export function createCommand({
           manifest
             .replace(/{{extensionId}}/g, extId)
             .replace(/{{appName}}/g, appName!),
-          { encoding: "utf-8" }
+          { encoding: "utf-8" },
         );
       });
     }
@@ -150,7 +147,7 @@ export function createCommand({
         ? [["npm", ["install"]]]
         : [["yarn", ["install"]]];
 
-      for (let command of packageCommands) {
+      for (const command of packageCommands) {
         await new Promise<void>((resolve, reject) => {
           const [proc, args] = command;
 

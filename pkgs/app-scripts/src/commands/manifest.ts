@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { writeFileSync } from "fs";
-import path from "path";
 import mkdirp from "mkdirp";
+import path from "path";
 import { buildManifest } from "../index";
 import { assertProjectRoot } from "../utils/assertProjectRoot";
 
@@ -21,6 +21,6 @@ export const manifestCommand = async () => {
 
   console.log(
     chalk.green
-      .bold`Manifest created to CSXS/manifest.xml by manifest.config.ts`
+      .bold`Manifest created to CSXS/manifest.xml by manifest.config.ts`,
   );
 };

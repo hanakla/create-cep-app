@@ -8,7 +8,7 @@ export async function reloadHostScript() {
     "/dist/host/index.js";
 
   const result = await new Promise((r) =>
-    csInterface.evalScript(`$.evalFile("${extPath}")`, r)
+    csInterface.evalScript(`$.evalFile("${extPath}")`, r),
   );
 
   console.log("hostscript reloaded: ", { result });
@@ -21,7 +21,7 @@ export async function postMessageToHost<K extends keyof MessageTypes>(
   const result = await new Promise<string>((resolve) => {
     csInterface.evalScript(
       `messageHandler(${JSON.stringify({ type, payload })})`,
-      resolve
+      resolve,
     );
   });
 

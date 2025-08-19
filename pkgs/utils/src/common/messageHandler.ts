@@ -22,7 +22,7 @@ export const createMessageHandler = () => {
 };
 
 class MessageHandler<
-  T extends { [event: string]: { payload: any; response: any } } = {}
+  T extends { [event: string]: { payload: any; response: any } } = {},
 > {
   private handlers: any = {};
 
@@ -33,7 +33,7 @@ class MessageHandler<
    */
   public event<E extends string, P extends Array<any>, R>(
     event: E,
-    handler: (...args: P) => R
+    handler: (...args: P) => R,
   ): MessageHandler<
     T & { [k in E]: { payload: Parameters<typeof handler>; response: R } }
   > {

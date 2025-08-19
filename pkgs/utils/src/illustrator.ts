@@ -8,7 +8,7 @@ export const queryPageItem = (
       }
     | { uuid: number }
     | { typename: string }
-  )
+  ),
 ): PageItem[] => {
   let { items } = getAllPageItems(doc);
 
@@ -44,7 +44,7 @@ export const queryPageItem = (
 /** @see https://zephmann.wordpress.com/2019/04/05/recursive-template-function-for-adobe-illustrator/ */
 const getAllPageItems = (
   parent: Document | Layer | PageItem | GroupItem | PathItem,
-  allItems = { items: [] as PageItem[], notice: [] }
+  allItems = { items: [] as PageItem[], notice: [] },
 ) => {
   if ("layers" in parent) {
     for (const layer of parent.layers) {

@@ -1,7 +1,7 @@
 function keyMirror<T extends object>(t: T): { [K in keyof T]: K } {
   return Object.keys(t).reduce(
     (a, k) => Object.assign(a, { [k]: k }),
-    Object.create(null)
+    Object.create(null),
   );
 }
 
