@@ -144,21 +144,27 @@ export function createCommand({
 
     {
       const packageCommands: [string, string[]][] = useNpm
-        ? [["npm", ["install"]]]
-        : [["yarn", ["install"]]];
+        ? [
+            ["npm", ["install"]],
+            ["npx", ["biome", "init"]],
+          ]
+        : [
+            ["yarn", ["install"]],
+            ["yarn", ["exec", "biome", "init"]],
+          ];
 
       for (const command of packageCommands) {
         await new Promise<void>((resolve, reject) => {
           const [proc, args] = command;
 
-          spawn(proc, args, {
+          const cproc = spawn(proc, args, {
             stdio: "inherit",
             cwd: appPath,
             env: { ...process.env },
           }).on("close", (code) => {
             if (code !== 0) {
               console.error(chalk.red(`😱 Failed to install dependencies`));
-              reject(new Error("`yarn install` failed"));
+              reject(new Error("Package installation failed"));
               return;
             }
 

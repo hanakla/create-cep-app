@@ -1,11 +1,11 @@
 /// <reference path="./components/spectrum-web-components.d.ts" />
 import type { RGBColor } from "@extendscript/csinterface";
 
-import "@spectrum-web-components/bundle/elements";
-import "@spectrum-web-components/icons/sp-icons-medium";
-import "@spectrum-web-components/icons/sp-icons-large";
-import "@spectrum-web-components/icons-workflow/icons/sp-icon-bell";
-import "@spectrum-web-components/icons-workflow/icons/sp-icon-refresh";
+import "@spectrum-web-components/bundle/elements.js";
+import "@spectrum-web-components/icons/sp-icons-medium.js";
+import "@spectrum-web-components/icons/sp-icons-large.js";
+import "@spectrum-web-components/icons-workflow/icons/sp-icon-bell.js";
+import "@spectrum-web-components/icons-workflow/icons/sp-icon-refresh.js";
 
 import { TinyColor } from "@ctrl/tinycolor";
 import domready from "domready";

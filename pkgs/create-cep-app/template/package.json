@@ -40,6 +40,7 @@
     "tailwindcss": "^4.1.8",
     "types-for-adobe": "^7.0.0",
     "@tailwindcss/vite": "^4.1.8",
+    "@biomejs/biome": "^2.2.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"
   }
