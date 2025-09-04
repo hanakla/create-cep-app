@@ -1,18 +1,19 @@
-import path from "path";
 import chalk from "chalk";
+import path from "path";
 import { assertProjectRoot } from "../utils/assertProjectRoot";
 
-const webpack: typeof import("webpack") = require(require.resolve("webpack", {
-  paths: [process.cwd()],
-}));
+const webpack: typeof import("webpack") = require(
+  require.resolve("webpack", {
+    paths: [process.cwd()],
+  }),
+);
 
 export const watchCommand = async () => {
   assertProjectRoot();
 
-  const config = require(path.posix.join(
-    process.cwd(),
-    "webpack.config"
-  )).default;
+  const config = require(
+    path.posix.join(process.cwd(), "webpack.config"),
+  ).default;
   const compiler = webpack({ ...config, watch: true });
 
   compiler.hooks.beforeCompile.tap("cep-ap-scripts", () => {

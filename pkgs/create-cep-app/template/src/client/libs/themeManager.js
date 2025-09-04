@@ -1,13 +1,11 @@
-import { csInterface, CSInterface } from "../infra/csInterface";
+import { CSInterface, csInterface } from "../infra/csInterface";
 
 /*
     Responsible for overwriting CSS at runtime according to CC app
     settings as defined by the end user.
 */
 
-export const themeManager = (function () {
-  "use strict";
-
+export const themeManager = (() => {
   /**
    * Convert the Color object to string in hexadecimal format;
    */
@@ -43,7 +41,7 @@ export const themeManager = (function () {
         green: Math.abs(255 - color.green),
         blue: Math.abs(255 - color.blue),
       },
-      delta
+      delta,
     );
   }
 
@@ -57,7 +55,7 @@ export const themeManager = (function () {
       } else if (stylesheet.insertRule) {
         stylesheet.insertRule(
           selector + " { " + rule + " }",
-          stylesheet.cssRules.length
+          stylesheet.cssRules.length,
         );
       }
     }
@@ -84,7 +82,7 @@ export const themeManager = (function () {
     addRule(
       styleId,
       ".hostElt",
-      "font-size:" + appSkinInfo.baseFontSize + "px;"
+      "font-size:" + appSkinInfo.baseFontSize + "px;",
     );
     addRule(styleId, ".hostElt", "font-family:" + appSkinInfo.baseFontFamily);
     addRule(styleId, ".hostElt", "color:" + "#" + fontColor);
@@ -94,24 +92,24 @@ export const themeManager = (function () {
     addRule(
       styleId,
       ".hostBgdLight",
-      "background-color: " + "#" + lightBgdColor
+      "background-color: " + "#" + lightBgdColor,
     );
     addRule(
       styleId,
       ".hostFontSize",
-      "font-size:" + appSkinInfo.baseFontSize + "px;"
+      "font-size:" + appSkinInfo.baseFontSize + "px;",
     );
     addRule(
       styleId,
       ".hostFontFamily",
-      "font-family:" + appSkinInfo.baseFontFamily
+      "font-family:" + appSkinInfo.baseFontFamily,
     );
     addRule(styleId, ".hostFontColor", "color:" + "#" + fontColor);
 
     addRule(
       styleId,
       ".hostFont",
-      "font-size:" + appSkinInfo.baseFontSize + "px;"
+      "font-size:" + appSkinInfo.baseFontSize + "px;",
     );
     addRule(styleId, ".hostFont", "font-family:" + appSkinInfo.baseFontFamily);
     addRule(styleId, ".hostFont", "color:" + "#" + fontColor);
@@ -121,14 +119,14 @@ export const themeManager = (function () {
     addRule(
       styleId,
       ".hostButton:active",
-      "background-color:" + "#" + darkBgdColor
+      "background-color:" + "#" + darkBgdColor,
     );
     addRule(styleId, ".hostButton", "border-color: " + "#" + lightBgdColor);
   }
 
   function onAppThemeColorChanged(event) {
     var skinInfo = JSON.parse(
-      window.__adobe_cep__.getHostEnvironment()
+      window.__adobe_cep__.getHostEnvironment(),
     ).appSkinInfo;
     updateThemeWithAppSkinInfo(skinInfo);
   }
@@ -138,7 +136,7 @@ export const themeManager = (function () {
 
     csInterface.addEventListener(
       CSInterface.THEME_COLOR_CHANGED_EVENT,
-      onAppThemeColorChanged
+      onAppThemeColorChanged,
     );
   }
 

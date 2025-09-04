@@ -1,4 +1,4 @@
-import { CSInterface } from "csinterface/src/v11";
+import { CSInterface } from "@extendscript/csinterface/dist/v11";
 
 export { CSInterface };
 export const csInterface: CSInterface = new CSInterface();

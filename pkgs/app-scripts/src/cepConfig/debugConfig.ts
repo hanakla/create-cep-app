@@ -19,7 +19,7 @@ export const buildDotDebug = ({ extensionId, ports }: DebugConfig) => {
                   ([app, port]) => `
                   <!-- ${app} -->
                   <Host Name={${HostNameMap[app][0]} Port="${port}" />
-                `
+                `,
                 ).join("")}
             </HostList>
         </Extension>

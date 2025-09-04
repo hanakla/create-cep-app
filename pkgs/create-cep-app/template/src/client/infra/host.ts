@@ -1,13 +1,14 @@
-import { MessageTypes, ResponseTypes } from "../../shared/MessageTypes";
-import { csInterface, CSInterface } from "./csInterface";
+import type { MessageTypes, ResponseTypes } from "../../shared/MessageTypes";
+import { CSInterface, csInterface } from "./csInterface";
 
+/** Reloading the host script */
 export async function reloadHostScript() {
   const extPath =
     csInterface.getSystemPath(CSInterface.SystemPath.EXTENSION) +
     "/dist/host/index.js";
 
   const result = await new Promise((r) =>
-    csInterface.evalScript(`$.evalFile("${extPath}")`, r)
+    csInterface.evalScript(`$.evalFile("${extPath}")`, r),
   );
 
   console.log("hostscript reloaded: ", { result });
@@ -20,7 +21,7 @@ export async function postMessageToHost<K extends keyof MessageTypes>(
   const result = await new Promise<string>((resolve) => {
     csInterface.evalScript(
       `messageHandler(${JSON.stringify({ type, payload })})`,
-      resolve
+      resolve,
     );
   });
 

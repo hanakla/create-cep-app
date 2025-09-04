@@ -10,9 +10,12 @@
     "pkgs/*"
   ],
   "scripts": {
+    "lint:fix": "biome check --fix",
     "build": "wsrun -m build"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
+    "lefthook": "^1.12.3",
     "wsrun": "^5.2.4"
   }
 }

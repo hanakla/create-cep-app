@@ -1,6 +1,6 @@
 import format from "xml-formatter";
 import { escaleFalsy } from "../utils/escapeFalsy";
-import { Apps, HostNameMap } from "./constants";
+import { type Apps, HostNameMap } from "./constants";
 
 export type CEPManifest = {
   bundleId: string;
@@ -79,7 +79,7 @@ export function buildManifest(option: CEPManifest) {
     }" ExtensionBundleVersion="1.0" Version="6.0">
       <ExtensionList>
         ${option.extensions.map(
-          (ex) => `<Extension Id="${ex.id}" Version="${ex.version}" />`
+          (ex) => `<Extension Id="${ex.id}" Version="${ex.version}" />`,
         )}
       </ExtensionList>
       <ExecutionEnvironment>
@@ -88,9 +88,10 @@ export function buildManifest(option: CEPManifest) {
             .map(([name, opt]) =>
               HostNameMap[name as keyof typeof HostNameMap]
                 .map(
-                  (ident) => `<Host Name="${ident}" Version="${opt.version}" />`
+                  (ident) =>
+                    `<Host Name="${ident}" Version="${opt.version}" />`,
                 )
-                .join("\n")
+                .join("\n"),
             )
             .join("\n")}
         </HostList>
@@ -139,7 +140,7 @@ export function buildManifest(option: CEPManifest) {
                       `
                         <StartOn>
                           ${ext.lifeCycle.startOn?.events.map(
-                            (ev) => `<Event>${ev}</Event>`
+                            (ev) => `<Event>${ev}</Event>`,
                           )}
                         </StartOn>
                       `
@@ -178,7 +179,7 @@ export function buildManifest(option: CEPManifest) {
                       <Icons>
                         ${Object.entries(ext.icons).map(
                           ([type, value]) =>
-                            `<Icon Type="${type}">${value}</Icon>`
+                            `<Icon Type="${type}">${value}</Icon>`,
                         )}
                       </Icons>
                     `
@@ -186,7 +187,7 @@ export function buildManifest(option: CEPManifest) {
                   </UI>
                 </DispatchInfo>
               </Extinsion>
-            `
+            `,
         )}
       </DispatchInfoList>
     </ExtensionManifest>

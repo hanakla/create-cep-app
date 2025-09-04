@@ -1,10 +1,10 @@
 import chalk from "chalk";
 import { writeFileSync } from "fs";
-import path from "path";
 import mkdirp from "mkdirp";
+import path from "path";
+import { buildDotDebug } from "../cepConfig/debugConfig";
 import { buildManifest } from "../index";
 import { assertProjectRoot } from "../utils/assertProjectRoot";
-import { buildDotDebug } from "../cepConfig/debugConfig";
 
 export const manifestCommand = async () => {
   assertProjectRoot();
@@ -15,7 +15,7 @@ export const manifestCommand = async () => {
   const config = require(configPath).debugPorts;
   if (!config) {
     console.log(
-      `[manifest.config.ts].debugPorts not found, to ignoring this command`
+      `[manifest.config.ts].debugPorts not found, to ignoring this command`,
     );
     return;
   }
@@ -29,6 +29,6 @@ export const manifestCommand = async () => {
 
   console.log(
     chalk.green
-      .bold`Manifest created to CSXS/manifest.xml by manifest.config.ts`
+      .bold`Manifest created to CSXS/manifest.xml by manifest.config.ts`,
   );
 };

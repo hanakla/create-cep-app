@@ -1,5 +1,5 @@
 export {
-  CEPManifest,
   buildManifest,
+  CEPManifest,
   defineCEPManifest,
 } from "./cepConfig/cepConfig";

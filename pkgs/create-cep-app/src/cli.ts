@@ -17,7 +17,7 @@ yargs(hideBin(process.argv))
         }),
     ({ useNpm, id, _ }) => {
       createCommand({ appName: _[0] as string, useNpm, extensionId: id });
-    }
+    },
   )
   .demandCommand()
   .parse();
